@@ -8,8 +8,8 @@ Aplicação instalável no celular para encaminhar vídeos de registros aos clie
 3. `/api/enviar` chama o n8n com telefone, nome, URL e dados do vídeo.
 
 ## Variáveis necessárias
-- `N8N_WEBHOOK_URL`: URL do webhook de produção do n8n.
-- `APP_ACCESS_PIN`: código privado do fotógrafo.
+- `N8N_WEBHOOK_ENDPOINT`: URL do webhook de produção do n8n.
+- `PHOTOGRAPHER_ACCESS_PIN`: código privado do fotógrafo.
 - `BLOB_READ_WRITE_TOKEN`: gerado ao conectar o Blob Store da Vercel ao projeto.
 
 ## Ajuste obrigatório no n8n

@@ -8,7 +8,8 @@ function validPin(received, expected) {
 }
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Método não permitido.' });
-  if (!process.env.BLOB_READ_WRITE_TOKEN || !process.env.APP_ACCESS_PIN) {
+  const accessPin = process.env.PHOTOGRAPHER_ACCESS_PIN || process.env.APP_ACCESS_PIN;
+  if (!process.env.BLOB_READ_WRITE_TOKEN || !accessPin) {
     return res.status(503).json({ error: 'Armazenamento ou código de acesso ainda não configurado.' });
   }
   try {
@@ -18,7 +19,7 @@ export default async function handler(req, res) {
       onBeforeGenerateToken: async (_pathname, clientPayload) => {
         let payload = {};
         try { payload = typeof clientPayload === 'string' ? JSON.parse(clientPayload) : clientPayload || {}; } catch {}
-        if (!validPin(payload.pin, process.env.APP_ACCESS_PIN)) throw new Error('Código de acesso inválido.');
+        if (!validPin(payload.pin, accessPin)) throw new Error('Código de acesso inválido.');
         return {
           allowedContentTypes: ['video/mp4','video/quicktime','video/webm','video/x-m4v','video/3gpp','video/3gpp2','video/x-msvideo','video/x-matroska'],
           maximumSizeInBytes: 1024 ** 3,

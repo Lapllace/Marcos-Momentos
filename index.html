@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090711"><meta name="description" content="Envio de vídeos para clientes — Marcus Momento.">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icon-192.png"><link rel="apple-touch-icon" href="/icon-192.png">
+<title>Marcus Momento | Envio de vídeos</title>
+</head>
+<body>
+<div class="glow glow-a" aria-hidden="true"></div><div class="glow glow-b" aria-hidden="true"></div>
+<main class="shell">
+<header class="brand"><img src="/icon-192.png" alt="" class="mark"><div><p class="eyebrow">REGISTROS • EXPERIÊNCIAS • MEMÓRIAS</p><h1>MARCUS <span>MOMENTO</span></h1></div></header>
+<section class="panel" aria-labelledby="page-title">
+<div class="pill"><i></i> ENVIO RÁPIDO</div>
+<h2 id="page-title">Um momento especial,<br><span>entregue em vídeo.</span></h2>
+<p class="intro">Informe o WhatsApp do cliente e selecione o vídeo para enviar.</p>
+<form id="send-form" novalidate>
+<label for="phone">WhatsApp do cliente</label>
+<div class="phone"><b>+55</b><input id="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="(75) 99999-8888" maxlength="16" required></div>
+<label for="video">Vídeo do registro</label>
+<label class="dropzone" id="dropzone" for="video">
+<span class="upload-icon">↑</span><strong id="file-title">Toque para selecionar o vídeo</strong><small id="file-meta">MP4, MOV ou outro formato de vídeo</small>
+<input id="video" type="file" accept="video/*" required>
+</label>
+<label for="pin">Código de acesso</label><input id="pin" class="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="Digite seu código" required>
+<p class="privacy">▣ Área de envio protegida por código de acesso.</p>
+<div class="progress" id="progress-area" hidden><div><span id="progress-label">Preparando envio...</span><b id="progress-value">0%</b></div><span class="track"><i id="progress-bar"></i></span></div>
+<button id="submit-button" type="submit"><span id="button-label">Enviar vídeo</span><b>→</b></button><p id="status" role="status" aria-live="polite"></p>
+</form></section>
+<footer>© <span id="year"></span> Marcus Momento <i>•</i> Cada momento merece ser lembrado.</footer>
+</main><script type="module" src="/src/main.js"></script>
+</body></html>

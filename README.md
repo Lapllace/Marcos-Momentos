@@ -1,23 +1,23 @@
 # Marcus Momento — PWA de envio de vídeos
 
-Aplicação mobile-first instalável no celular para encaminhar vídeos de registros ao WhatsApp dos clientes.
+Aplicação instalável no celular para encaminhar vídeos de registros aos clientes.
 
 ## Como funciona
-1. O navegador envia o vídeo diretamente ao Vercel Blob (sem atravessar o limite de 4,5 MB das Functions).
-2. A rota `/api/upload-token` autoriza uploads com um código de acesso.
-3. A rota `/api/enviar` envia ao n8n um JSON com número, nome do arquivo e URL do vídeo.
+1. O navegador envia o vídeo diretamente ao Vercel Blob.
+2. `/api/upload-token` autoriza o upload usando um PIN privado.
+3. `/api/enviar` chama o n8n com telefone, nome, URL e dados do vídeo.
 
-## Variáveis na Vercel
+## Variáveis necessárias
 - `N8N_WEBHOOK_URL`: URL do webhook de produção do n8n.
 - `APP_ACCESS_PIN`: código privado do fotógrafo.
-- `BLOB_READ_WRITE_TOKEN`: criado automaticamente ao conectar um Blob Store ao projeto.
+- `BLOB_READ_WRITE_TOKEN`: gerado ao conectar o Blob Store da Vercel ao projeto.
 
-## Ajuste necessário no n8n
-O webhook recebe JSON, não o arquivo binário. Após o Webhook, configure um nó HTTP Request (GET) com URL `{{$json.body.videoUrl}}` — ou `{{$json.videoUrl}}`, conforme a saída do seu nó — para baixar o vídeo e disponibilizá-lo como binário ao nó de envio de WhatsApp. O número chega em formato internacional (ex.: `5575999998888`).
+## Ajuste obrigatório no n8n
+O Webhook recebe JSON, não o arquivo binário. Após o Webhook, configure um nó HTTP Request (GET) para baixar `{{$json.body.videoUrl}}` (ou `{{$json.videoUrl}}`, conforme a saída do nó) e encaminhar o binário ao nó de envio de mídia pelo WhatsApp. O telefone chega em formato internacional, por exemplo `5575999998888`.
 
-O retorno 2xx do webhook confirma que o n8n aceitou o gatilho, não que o WhatsApp já entregou a mídia. Confirme a execução do workflow.
+Uma resposta 2xx apenas confirma que o n8n aceitou o gatilho; confira a execução do workflow para confirmar o envio ao WhatsApp.
 
-Os vídeos ficam em um Blob público para permitir que o n8n os baixe sem credenciais adicionais. A URL é aleatória, mas qualquer pessoa que a possua pode acessar o vídeo. Defina uma política de retenção e exclusão adequada à privacidade dos clientes.
+Os vídeos ficam em Blob público para que o n8n possa baixá-los sem credenciais extras. Qualquer pessoa com a URL pode acessar o conteúdo. Trate os links como privados e defina política de exclusão/retenção dos vídeos conforme a privacidade dos clientes.
 
 ## Desenvolvimento
 ```bash
